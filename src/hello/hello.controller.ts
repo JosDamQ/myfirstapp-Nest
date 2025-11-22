@@ -42,7 +42,7 @@ export class HelloController {
     }
 
     @Get('/greet')
-    // Este guard lo puedo usar para validar roles por ejemplo o para autenticar usuarios
+    // Este guard lo puedo usar para validar roles por ejemplo
     @UseGuards(AuthGuard)
     // Crear pipes personalizados
     greet(@Query(ValidateUserPipe) query: { name: string, age: number }) : string {
