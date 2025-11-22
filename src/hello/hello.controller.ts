@@ -1,6 +1,7 @@
-import { Controller, Get, Req, Res, HttpCode, Param, ParseIntPipe, ParseBoolPipe, Query } from '@nestjs/common';
+import { Controller, Get, Req, Res, HttpCode, Param, ParseIntPipe, ParseBoolPipe, Query, UseGuards } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { ValidateUserPipe } from './pipes/validate-user/validate-user.pipe';
+import { AuthGuard } from './guards/auth/auth.guard';
 
 @Controller('hello')
 export class HelloController {
@@ -40,8 +41,10 @@ export class HelloController {
         return status;
     }
 
-    //Crear pipes personalizados
     @Get('/greet')
+    // Este guard lo puedo usar para validar roles por ejemplo o para autenticar usuarios
+    @UseGuards(AuthGuard)
+    // Crear pipes personalizados
     greet(@Query(ValidateUserPipe) query: { name: string, age: number }) : string {
         console.log(typeof query.age);
         console.log(typeof query.name);
